@@ -1,9 +1,12 @@
 import { DailySummary } from "@/types";
 import { sleep } from "@/util";
 import { faker } from "@faker-js/faker";
+import { unstable_cacheLife as cacheLife } from "next/cache";
 
 export const getDailySummary = async (): Promise<DailySummary> => {
-    await sleep(2000);
+    "use cache";
+    cacheLife("dailySummary");
+    await sleep(500);
     return {
         totalTrades: faker.number.int({ min: 10000, max: 1000000 }),
         volume: faker.number.int({ min: 1000000, max: 100000000 }),

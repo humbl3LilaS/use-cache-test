@@ -1,9 +1,12 @@
 import { LiveQuote } from "@/types";
 import { sleep } from "@/util";
 import { faker } from "@faker-js/faker";
+import { unstable_cacheLife as cacheLife } from "next/cache";
 
 export const getLiveQuotes = async (): Promise<LiveQuote> => {
-    await sleep(1000);
+    "use cache";
+    cacheLife("liveQuote");
+    await sleep(500);
 
     const basePrice = faker.number.float({ min: 100, max: 1000, fractionDigits: 2 });
     const change = faker.number.float({ min: -20, max: 20, fractionDigits: 2 });
